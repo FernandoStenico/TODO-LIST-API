@@ -1,0 +1,33 @@
+# TODO-LIST-API
+Passo 1: Importar o Projeto no Eclipe
+
+Passo 2: Alterar o arquivo src/main/resources (nome do arquivo: application.properties)
+
+OBS: Este arquivo é responsavel por criar as tabelas e colunas automaticamente do banco de dados. Para isso deve-se alterar o nome da base de dados, usuario e senha do BD no arquivo.
+
+Neste Caso utilizei MYSQL, caso utilize outro BD, deve-se alterar o Driver.
+
+#spring.jpa.hibernate.ddl-auto=create #spring.datasource.url=jdbc:mysql://localhost:3306/bd_itau #spring.datasource.username= root #spring.datasource.password= root
+
+Passo 3: Para efetuar os testes, segue script para popular o BD:
+
+INSERT INTO tb_tarefa values (1,'Migracao do sistema operacional windows', 'Migracao W10','Pendente');
+INSERT INTO tb_tarefa values (5,'Entrega de notebook padrao', 'Mobilidade Notebook Padrao','Concluido');
+
+Passo 4: Execute o Projeto na Main
+
+OBS: Atenção no LOG do servidor, validar se não apresenta erros na console.
+
+Passo 5: Os testes de GET, PUT, POST, UPDATE, DELETE foram executados na ferramenta POSTMAN. Segue o link do invite, as abas estão configuradas para testes https://app.getpostman.com/join-team?invite_code=c274daf65aa4869ee777033b40c48a58
+
+OBS: Atenção para parametrizar a aba HEADRES para os seguintes dados: KEY: Content-Type // VALUE: application/json
+
+URL: http://localhost:8080/api/tarefa/
+
+Passo 6: Segue o script para testes:
+       {
+        "id": 1,
+        "nome": "Migracao IHF",
+        "descricao": "Migracao de servidor",
+        "status": "Concluido" 
+        }
