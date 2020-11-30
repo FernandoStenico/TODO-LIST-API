@@ -1,0 +1,62 @@
+
+Primeiro Passo: 
+
+Criei a aplicação no Spring.io, utilizando o MAVEN como gerenciador. E adcionei todas as dependencias como por exemplo: MYSQL, WEB, JPA, DEV TOOLS
+Realizei o import do projeto no Eclipse. 
+
+Caminho da Classe: com.todolist.api/ApirestApplication
+
+A Classe public class ApirestApplication que possui o metodo void main é resposanvel pela inicialização da aplicação spring boot. 
+
+OBS: Esta Classe precisa ficar na raiz do projeto, caso contrario não é posivel executar o projeto
+
+Segundo Passo:
+
+Dentro do pacote MODELS, tenho a Classe Tarefa.java que é a entidade do banco de dados @Entity. 
+Neste caso foi personalizado para criar a tabela com o nome @Table(name="TB_TAREFA")
+
+Foi definido os atributos das Tarefas: @ID, @NOME, @DESCRICAO, @STATUS 
+@GeneratedValue (Neste caso indico para o BD que vai criar automaticamente os ID`s quando eu precisar fazer um post, não preciso passar o ID.
+Foi Gerado para estes atributos os metodos getters e setters 
+
+Terceiro Passo: 
+
+No Pacote com.todolist.api.resourcers tenho um arquivo application.properties que é responsavel por toda a configuração do banco de dados, mais é preciso criar uma base de dados antes, neste caso eu utilizei MYSQL. 
+#banco de dados local Fernando
+#spring.datasource.url=jdbc:mysql://localhost:3306/bd_iu (nome da minha base local)
+#spring.datasource.username= root  (nome do usuario do banco)
+#spring.datasource.password= root  (senha do banco de dados )
+
+Quando Startar a aplicação na MAIN, é criado automaticamente a tabela na base de dados apontada, pois, definimos anteriormente para o hibernate criar automaticamente a tabela TB_TAREFA, pois foi mapeado anteriormente utilizando o JPA  
+
+
+Quarto Passo:
+
+No Pacote com.todolist.api.repository tenho uma interface TarefaRepository 
+Tenho uma classe que se chama public interface TarefaRepository que faz a extensão da classe JpaRepository<Tarefa, dentro dela estou passando como argumento a entidade e o tipo de ID
+
+Utilizei o JPAREPOSITORY, pois tem varios metodos prontos para realizar a persistencia no banco de dados (SAVE, UPDATE..) depois crio uma extancia e utilizo estes metodos prontos 
+
+Quinto Passo: 
+
+No Pacote com.todolist.api.resources tenho uma classe TarefaResource
+
+Esta classe recebe as requisições HTTP @RestController
+Defini tambem a URI padrão @RequestMapping(value="/api") para que facilitar quando quiser listar por ID por exemplo.
+
+Dentro desta classe tenho varios metodos: 
+
+Public List<Tarefa> listaTarefas() vai me retornar todas as tarefas cadastradas no BD utilizando o TarefaRepository.findAll();  
+
+Public Tarefa listaTarefaUnica
+tarefaRepository.findById(id) Vai me retornar por id a tarefa tive que adaptar criando um metodo personalizado no arquivo TarefaRepository determinando por ID, podendo utilizar o metodo.
+
+public Tarefa salvatarefa é o metodo resposavel por salvar os dados no banco de dados, ponto de atencao quando testar é que tem que deixar a formatacao do cabecalho KEY: Content-Type e VALUE: application/json, pois estamos enviando por json, a API não consegue identificar como vai receber o post
+
+public void deletaTarefa é o metodo responsavel por deletar uma tarefa existente no banco de dados. 
+tarefaRepository.delete(tarefa);  neste caso não vai me retornar nada (APENAS o STATUS 200), apenas executar, mais preciso passar o ID na requisição do metodo, para identificar.
+
+public Tarefa atualizaTarefa é o metodo responsavel por atualizar uma tarefa existente no banco de dados, neste caso vai me retornar a tarefa que foi atualizada ! Assim como foi feito no post e delete, vou receber esta tarefa que foi atualizado atraves do @RequestBody pelo JSON.
+
+
+
